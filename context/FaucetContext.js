@@ -1,5 +1,5 @@
 import { createContext } from "react";
 
-const FaucetContext = createContext();
+const faucetContext = createContext();
 
-export default FaucetContext;
+export default faucetContext;
