@@ -76,18 +76,15 @@ const FaucetState = (props) => {
   async function getClientIPAddress() {
     return new Promise((resolve, reject) => {
       http
-        .get(
-          { host: "api.ipify.org", port: 80, path: "/", mode: "no-cors" },
-          function (resp) {
-            let data = "";
-            resp.on("data", function (chunk) {
-              data += chunk;
-            });
-            resp.on("end", function () {
-              resolve(data);
-            });
-          }
-        )
+        .get({ host: "api.ipify.org", port: 80, path: "/" }, function (resp) {
+          let data = "";
+          resp.on("data", function (chunk) {
+            data += chunk;
+          });
+          resp.on("end", function () {
+            resolve(data);
+          });
+        })
         .on("error", function (err) {
           reject(err);
         });
