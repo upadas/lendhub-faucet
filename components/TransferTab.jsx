@@ -4,39 +4,57 @@ import { ETHAddress, DAIAddress, USDCAddress, LINKAddress } from "../addresses";
 import faucetContext from "../context/faucetContext";
 import { toast } from "react-toastify";
 
-const TransferTab = () => {
-  const { transferAssets, connectWallet } = useContext(faucetContext);
-  const [userAddress, setUserAddress] = useState("");
-  const [isUserAddressValid, setIsUserAddressValid] = useState(false);
-  const [tokenAddress, setTokenAddress] = useState(ETHAddress);
-  const [isTransferingToken, setisTransferingToken] = useState(false);
 
+const TransferTab = () => {
+  const { transferAssets, connectWallet, metamaskDetails} = useContext(faucetContext);
+  const [userAddress, setUserAddress] = useState(metamaskDetails.currentAccount);
+  const [isUserAddressValid, setIsUserAddressValid] = useState(true);
+  const [tokenAddress, setTokenAddress] = useState(ETHAddress);
+  const [isTransferingToken, setIsTransferringToken] = useState(false);
+  
   const validateAddress = (address) => {
-    if (address) {
-      var pattern = new RegExp(/^0x[a-fA-F0-9]{40}$/);
-      if (!pattern.test(address)) {
-        setIsUserAddressValid(false);
-        setUserAddress("");
-      } else {
-        setUserAddress(address);
+    var ethereum_address = require("ethereum-address");
+    if (ethereum_address.isAddress(address)) {
         setIsUserAddressValid(true);
-      }
+        setUserAddress(address);
+        console.log("Valid Ethereum address :" + address );
+
+    } else {
+      setIsUserAddressValid(false);
+      console.log("Invalid Ethereum address :" + address );
     }
+
+    // if (address) {
+    //   var pattern = new RegExp(/^0x[a-fA-F0-9]{40}$/);
+    //   if (!pattern.test(address)) {
+    //     setIsUserAddressValid(false);
+    //     setUserAddress("");
+    //   } else {
+    //     setUserAddress(address);
+    //     setIsUserAddressValid(true);
+    //   }
+    // }
   };
 
+  // const 
   const handleSendMe = async () => {
     console.log(userAddress);
     console.log(tokenAddress);
 
-    setisTransferingToken(true);
-    const transaction = await transferAssets(userAddress, tokenAddress);
-    if (transaction.status == 200) {
-      setisTransferingToken(false);
-      toast.success(`Transfer Successfully !`);
-      await connectWallet();
-    } else {
-      setisTransferingToken(false);
-      toast.error("Repay Failed");
+    setIsTransferringToken(true);
+    try{
+      const transaction = await transferAssets(userAddress, tokenAddress);
+      if (transaction.status == 200) {
+        setIsTransferringToken(false);
+        toast.success("Transfer Successful!");
+        await connectWallet();
+      } else {
+        setIsTransferringToken(false);
+        toast.error("Transfer Failed!");
+      }
+    } catch(error){
+      reportError
+      console.log("Error:" + error)
     }
   };
 
@@ -47,7 +65,7 @@ const TransferTab = () => {
           <div className="border border-[#A5A8B6] border-opacity-20 p-2  mr-2 rounded w-1/6 h-10 text-md font-normal">
             <select
               name=""
-              id=""
+              id="Asset"
               className="bg-transparent outline-none text-black w-full text-left px-1"
               onChange={(e) => setTokenAddress(e.target.value)}
             >
@@ -60,9 +78,10 @@ const TransferTab = () => {
           <div className="border border-[#A5A8B6] border-opacity-20 p-2 mr-2  rounded w-4/6 h-10 text-md font-normal">
             <input
               type="text"
+              defaultValue = {metamaskDetails.currentAccount}
               onChange={(e) => validateAddress(e.target.value)}
               className="bg-transparent outline-none  text-black w-full text-left px-1"
-              placeholder="Enter your address ( Ox... )"
+              placeholder="Enter your address ( 0x... )"
             />
           </div>
 
@@ -80,7 +99,7 @@ const TransferTab = () => {
                 return;
               }}
             >
-              Send Me
+               Send Me
             </button>
           )}
         </div>

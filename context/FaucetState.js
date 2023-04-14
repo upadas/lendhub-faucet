@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import FaucetContext from "./faucetContext";
 import { ethers } from "ethers";
-// const {
-//   DAI_USD_ADDRESS,
-//   USDC_USD_ADDRESS,
-//   LINK_USD_ADDRESS,
-// } = require("../addresses");
+const {
+  ETHAddress,
+  DAIAddress,
+  USDCAddress,
+  LINKAddress,
+  FaucetAddress,
+} = require("../addresses");
+const http = require("http");
+const FaucetAbi = require("../abis/Faucet.json");
 
 const FaucetState = (props) => {
   // Set metamask details
@@ -128,20 +132,65 @@ const FaucetState = (props) => {
   };
 
   /*************************** SendMe Functionality ***************************/
+  async function getClientIPAddress() {
+    return new Promise((resolve, reject) => {
+      http
+        .get({ host: "api.ipify.org", port: 80, path: "/" }, function (resp) {
+          let data = "";
+          resp.on("data", function (chunk) {
+            data += chunk;
+          });
+          resp.on("end", function () {
+            resolve(data);
+          });
+        })
+        .on("error", function (err) {
+          reject(err);
+        });
+    });
+  }
+
+  const isETHTransferred = (address) => {
+    if (address === ETHAddress) {
+      return true;
+    }
+    return false;
+  };
+
   const transferAssets = async (userAddress, tokenAddress) => {
+    const clientIPAddress = await getClientIPAddress();
     try {
-      // const amount = numberToEthers(borrowAmount);
-      // console.log(
-      //   "***Transferring token : " + token + "| borrowAmount : " + borrowAmount
-      // );
+      console.log(`Transfer Asset request - 
+      client address: ${userAddress} | 
+      client IP: ${clientIPAddress}  |  
+      token: ${tokenAddress}`);
 
-      // const contract = await getContract(LendingPoolAddress, LendingPoolABI);
-      // const transaction = await contract
-      //   .connect(metamaskDetails.signer)
-      //   .borrow(token, amount);
-      // await transaction.wait();
+      let contract;
+      try {
+        contract = new ethers.Contract(
+          FaucetAddress,
+          FaucetAbi.abi,
+          metamaskDetails.provider
+        );
+      } catch (error) {
+        reportError;
+        console.log("Error: " + error);
+      }
 
-      console.log("Token Transfer...");
+      if (isETHTransferred(tokenAddress)) {
+        const transaction = await contract
+          .connect(metamaskDetails.signer)
+          .transferETH(clientIPAddress);
+      } else {
+        const transaction = await contract
+          .connect(metamaskDetails.signer)
+          .transferToken(tokenAddress, clientIPAddress);
+      }
+      await transaction.wait();
+      // console.log("transaction :" + JSON.stringify(transaction));
+      console.log(transaction);
+      console.log("Asset Transfer complete...");
+      // pass the transaction hash
       displayYourTransactions();
       return { status: 200, message: "Transaction Successful.." };
     } catch (error) {
@@ -150,14 +199,19 @@ const FaucetState = (props) => {
     }
   };
 
-  const displayYourTransactions = () => {
+  // const timePassed = () => {
+  //   get
+  // };
+  const displayYourTransactions = (txHash, txUrl) => {
+    timePassed = "8 Minutes";
     try {
-      const hash =
-        "0x101f3c743d8e7071228c849b22cf082b31c37184e0bacc0a3fbf54e4929651b9";
+      // const hash =
+      //   "0x101f3c743d8e7071228c849b22cf082b31c37184e0bacc0a3fbf54e4929651b9";
       setYourTransaction({
-        transactionHash: hash,
-        transactionUrl: "https://sepolia.etherscan.io/tx/" + hash,
-        timePassed: "8 hours ago",
+        transactionHash: txHash,
+        // transactionUrl: "https://sepolia.etherscan.io/tx/" + hash,
+        transactionUrl: txUrl,
+        timePassed: timePassed,
       });
     } catch (error) {
       reportError(error);

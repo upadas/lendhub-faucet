@@ -17,8 +17,7 @@ contract Faucet is ReentrancyGuard{
     // IERC20 public usdcToken;
     // IERC20 publi1c linkToken;
     event FaucetDrained (address to, uint amount);
-    
-    // REcipient Account => Timestamp
+    // Recipient Account => Timestamp
     mapping (address => uint) lastETHReceivedTimestamp;
     // IP Address => Timestamp
     mapping (string => uint) lastETHReceivedIPAddress;
@@ -55,7 +54,7 @@ contract Faucet is ReentrancyGuard{
     }
 
     function transferETH(string memory _ipAddress) external payable{
-        require(msg.sender != address(0), Invalid address");
+        require(msg.sender != address(0), "Invalid address");
         //This is to prevent Sybil attack
         require(block.timestamp - lastETHReceivedIPAddress[_ipAddress] >= COOLDOWN_PERIOD, Request Not Allowed From This IP Address Yet");
         // Check for Cooldown period
