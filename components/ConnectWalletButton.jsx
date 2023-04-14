@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import faucetContext from "../context/faucetContext";
+import FaucetContext from "../context/FaucetContext";
 
 const ConnectWalletButton = () => {
-  const { metamaskDetails, connectWallet } = useContext(faucetContext);
+  const { metamaskDetails, connectWallet } = useContext(FaucetContext);
   return (
     <div>
       {!metamaskDetails.currentAccount ? (

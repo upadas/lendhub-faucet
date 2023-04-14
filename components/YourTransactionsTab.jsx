@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import faucetContext from "../context/faucetContext";
+import FaucetContext from "../context/FaucetContext";
 
 const YourTransactionsTab = () => {
-  const { yourTransaction } = useContext(faucetContext);
+  const { yourTransaction } = useContext(FaucetContext);
 
   console.log(yourTransaction);
 

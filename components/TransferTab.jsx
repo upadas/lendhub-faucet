@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
 import { YourTransactionsTab } from "../components";
 import { ETHAddress, DAIAddress, USDCAddress, LINKAddress } from "../addresses";
-import faucetContext from "../context/faucetContext";
+import FaucetContext from "../context/FaucetContext";
 import { toast } from "react-toastify";
 
 
 const TransferTab = () => {
-  const { transferAssets, connectWallet, metamaskDetails} = useContext(faucetContext);
+  const { transferAssets, connectWallet, metamaskDetails} = useContext(FaucetContext);
   const [userAddress, setUserAddress] = useState(metamaskDetails.currentAccount);
   const [isUserAddressValid, setIsUserAddressValid] = useState(true);
   const [tokenAddress, setTokenAddress] = useState(ETHAddress);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import FaucetContext from "./faucetContext";
+import FaucetContext from "./FaucetContext";
 import { ethers } from "ethers";
 const {
   ETHAddress,

@@ -1,14 +1,14 @@
 import Head from "next/head";
 import type { NextPage } from "next";
 import { Header } from "../components";
-import faucetContext from "../context/faucetContext";
+import FaucetContext from "../context/FaucetContext";
 import { useContext } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { DisconnectedTab, TransferTab } from "../components";
 
 const Home: NextPage = () => {
-  const { metamaskDetails } = useContext(faucetContext);
+  const { metamaskDetails } = useContext(FaucetContext);
   return (
     <>
       <Head>
