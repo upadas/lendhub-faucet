@@ -26,71 +26,12 @@ const FaucetState = (props) => {
     timePassed: null,
   });
 
-  // const connectWallet = async () => {
-  //   console.log("Connecting to MetaMask wallet...");
-
-  //   // First, check if Metamask is installed
-  //   if (typeof window.ethereum !== "undefined") {
-  //     console.log("Metamask is installed!");
-  //     try {
-  //       const accounts = await ethereum.request({
-  //         method: "eth_requestAccounts",
-  //       });
-
-  //       window.ethereum.on("chainChanged", () => {
-  //         window.location.reload();
-  //       });
-
-  //       window.ethereum.on("accountsChanged", () => {
-  //         window.location.reload();
-  //       });
-  //     } catch (error) {
-  //       reportError(error);
-  //     }
-  //   } else {
-  //     alert("MetaMask is not installed, please install and try again");
-  //     console.log("MetaMask is not installed, please install and try again");
-  //     return;
-  //   }
-
-  //   try {
-  //     const provider = new ethers.providers.Web3Provider(window.ethereum);
-  //     const network = await provider.getNetwork();
-  //     const networkName = network.name;
-  //     const signer = provider.getSigner();
-
-  //     // if (networkName != "sepolia") {
-  //     //   alert("Please switch your network to Sepolia Testnet");
-  //     //   return;
-  //     // }
-
-  //     if (accounts.length) {
-  //       let currentAddress = accounts[0];
-  //       setMetamaskDetails({
-  //         provider: provider,
-  //         networkName: networkName,
-  //         signer: signer,
-  //         currentAccount: currentAddress,
-  //       });
-  //       console.log("Connected to wallet....");
-  //     } else {
-  //       alert(
-  //         "Could not retrieve accounts from the wallet, Please create accounts an retry"
-  //       );
-  //       console.log("Could not retrieve accounts from the wallet");
-  //       return;
-  //     }
-  //   } catch (error) {
-  //     reportError(error);
-  //   }
-  // };
-
   const connectWallet = async () => {
     console.log("1. Connecting to wallet...");
     const { ethereum } = window;
     const failMessage = "Please install Metamask & connect your Metamask";
     try {
-      if (!ethereum) return; // console.log(failMessage);
+      if (!ethereum) return;
       const account = await ethereum.request({
         method: "eth_requestAccounts",
       });
@@ -135,15 +76,18 @@ const FaucetState = (props) => {
   async function getClientIPAddress() {
     return new Promise((resolve, reject) => {
       http
-        .get({ host: "api.ipify.org", port: 80, path: "/" }, function (resp) {
-          let data = "";
-          resp.on("data", function (chunk) {
-            data += chunk;
-          });
-          resp.on("end", function () {
-            resolve(data);
-          });
-        })
+        .get(
+          { host: "api.ipify.org", port: 80, path: "/", mode: "no-cors" },
+          function (resp) {
+            let data = "";
+            resp.on("data", function (chunk) {
+              data += chunk;
+            });
+            resp.on("end", function () {
+              resolve(data);
+            });
+          }
+        )
         .on("error", function (err) {
           reject(err);
         });
