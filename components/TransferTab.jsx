@@ -60,7 +60,7 @@ const TransferTab = () => {
 
   return (
     <div className="flex justify-center items-center ">
-      <div className="flex flex-col w-full md:px-10 bg-white rounded-3xl py-5 md:py-10 px-2 md:max-w-[900px] -mt-14  justify-center items-center text-center ">
+      <div className="flex flex-col w-full md:px-10 bg-slate-100 rounded-3xl py-5 md:py-10 px-2 md:max-w-[900px] -mt-14  justify-center items-center text-center ">
         <div className="flex justify-between items-center w-full mb-10">
           <div className="border border-[#A5A8B6] border-opacity-20 p-2  mr-2 rounded w-1/6 h-10 text-md font-normal">
             <select
@@ -87,14 +87,14 @@ const TransferTab = () => {
 
           {isUserAddressValid ? (
             <button
-              className="border-spacing-1 py-[6px] rounded-[4px] outline-none text-[12px] md:text-[13px]  text-white bg-[#212430] hover:bg-[#383D51] w-1/6 h-10"
+              className=" border-spacing-1 py-[6px] rounded-[4px] outline-none text-[18px] md:text-[13px]  text-white bg-gray-500 hover:bg-purple-500 w-1/6 h-10"
               onClick={() => handleSendMe()}
             >
               Send Me
             </button>
           ) : (
             <button
-              className="border-spacing-1 py-[6px] rounded-[4px] outline-none text-[12px] md:text-[13px]  text-white bg-[#383D51] bg-opacity-50 w-1/6 h-10"
+              className="border-spacing-1 py-[6px] rounded-[4px] outline-none text-[18px] md:text-[13px]  text-white bg-gray-500 hover:bg-purple-500 bg-opacity-50 w-1/6 h-10"
               onClick={() => {
                 return;
               }}

@@ -17,9 +17,9 @@ const Home: NextPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="w-full m-0 p-0 bg-gradient-to-b from-[#212430] to-[#17171a] h-[17rem] text-white">
+      <main className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500  w-full m-0 p-0 bg-gradient-to-b from-[#212430] to-[#17171a] h-[17rem] text-white">
         <Header />
-        <div className="text-center px-8 md:px-20 md:py-16 py-10">
+        <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-center px-8 md:px-20 md:py-16 py-10">
           <h1 className="pl-2 font-normal text-3xl md:text-5xl">
             LendHub Faucet
           </h1>
