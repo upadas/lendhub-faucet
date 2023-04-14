@@ -1,5 +1,8 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Netlify Build status
+[![Netlify Status](https://api.netlify.com/api/v1/badges/6bb648b4-e37c-4d29-b064-8ffe71dcb2c0/deploy-status)](https://app.netlify.com/sites/lendhub-faucet/deploys)
+
 ## Getting Started
 
 First, run the development server:
