@@ -73,6 +73,13 @@ const FaucetState = (props) => {
   };
 
   /*************************** SendMe Functionality ***************************/
+  // const IP_URLs = [
+  //   "https://api.ipify.org/",
+  //   "https://ipecho.net/plain",
+  //   "https://api.kwelo.com/v1/network/ip-address/my",
+  //   "https://myexternalip.com/raw",
+  // ];
+
   async function getClientIPAddress() {
     return new Promise((resolve, reject) => {
       http
