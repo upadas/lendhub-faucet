@@ -3,7 +3,14 @@ import FaucetContext from "./FaucetContext";
 import { ethers } from "ethers";
 import Axios from "axios";
 
-const { ETHAddress, FaucetAddress } = require("../addresses");
+const {
+  ETHAddress,
+  DAIAddress,
+  USDCAddress,
+  LINKAddress,
+  FaucetAddress,
+} = require("../addresses");
+const http = require("http");
 const FaucetAbi = require("../abis/Faucet.json");
 
 const FaucetState = (props) => {
@@ -81,9 +88,7 @@ const FaucetState = (props) => {
   };
 
   const transferAssets = async (userAddress, tokenAddress) => {
-    // const clientIPAddress = await getClientIPAddress();
-    const clientIPAddress = "183.87.185.57";
-    displayYourTransactions();
+    const clientIPAddress = await getClientIPAddress();
     try {
       console.log(`Transfer Asset request - 
       client address: ${userAddress} | 
@@ -116,7 +121,7 @@ const FaucetState = (props) => {
       console.log(transaction);
       console.log("Asset Transfer complete...");
       // pass the transaction hash
-      // displayYourTransactions();
+      displayYourTransactions();
       return { status: 200, message: "Transaction Successful.." };
     } catch (error) {
       reportError(error);
@@ -128,22 +133,15 @@ const FaucetState = (props) => {
   //   get
   // };
   const displayYourTransactions = (txHash, txUrl) => {
-    const time = "8 Minutes";
+    timePassed = "8 Minutes";
     try {
-      const txHash =
-        "0x101f3c743d8e7071228c849b22cf082b31c37184e0bacc0a3fbf54e4929651b9";
-      // setYourTransaction({
-      //   transactionHash: txHash,
-      //   // transactionUrl: "https://sepolia.etherscan.io/tx/" + hash,
-      //   transactionUrl: txUrl,
-      //   timePassed: timePassed,
-      // });
-
+      // const hash =
+      //   "0x101f3c743d8e7071228c849b22cf082b31c37184e0bacc0a3fbf54e4929651b9";
       setYourTransaction({
         transactionHash: txHash,
-        transactionUrl: "https://sepolia.etherscan.io/tx/" + txHash,
-        // transactionUrl: txUrl,
-        timePassed: time,
+        // transactionUrl: "https://sepolia.etherscan.io/tx/" + hash,
+        transactionUrl: txUrl,
+        timePassed: timePassed,
       });
     } catch (error) {
       reportError(error);
