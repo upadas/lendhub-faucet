@@ -6,7 +6,7 @@ import Image from "next/image";
 const DisconnectedTab = () => {
   return (
     <div className="flex justify-center items-center ">
-      <div className="bg-gradient-to-r from-pink-200 via-purple-300 to-indigo-400 flex flex-col w-full bg-slate-100 rounded-3xl py-5 md:py-10 px-2 md:max-w-[900px] -mt-14  justify-center items-center text-center ">
+      <div className="bg-gradient-to-r from-pink-200 via-purple-300 to-pink-200 flex flex-col w-full bg-slate-100 rounded-3xl py-5 md:py-10 px-2 md:max-w-[900px] -mt-14  justify-center items-center text-center ">
         <Image
           src={metamask}
           alt="metamask"
