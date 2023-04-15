@@ -67,11 +67,12 @@ contract Faucet is ReentrancyGuard{
         emit FaucetDrained (msg.sender, dailyETHThreshold);
     }
 
-    function transferToken(address _token, string memory _ipAddress) external{
+    function transferToken(address _token, string memory _ipAddress) external {
         require(msg.sender != address(0), Invalid address");
         require(IERC20(_token) == daiToken || IERC20(_token) == usdcToken || IERC20(_token) == linkToken, Token Not recognized");
         require(block.timestamp - lastTokenReceivedIPAddress[_ipAddress] >= COOLDOWN_PERIOD, Request Not Allowed Yet");
         require(block.timestamp - lastTokenReceivedTimestamp[msg.sender] >= COOLDOWN_PERIOD, Request Not Allowed Yet");
+        
         SafeERC20.safeTransfer(IERC20(_token), msg.sender, dailyTokenThreshold);
         // should use mint instead of transfer
         // IERC20(_token).mint(msg.sender, dailyTokenThreshold);
