@@ -1,11 +1,7 @@
 const { ethers } = require("hardhat");
 const { MAIN_ACCOUNT, INFURA_API_KEY, INFURA_SEPOLIA_API_URL } = process.env;
 const axios = require("axios");
-const {
-  DAI_USD_ADDRESS,
-  USDC_USD_ADDRESS,
-  LINK_USD_ADDRESS,
-} = require("../addresses");
+const { DAIAddress, USDCAddress, LINKAddress } = require("../addresses");
 const dai = require("../abis/dai.json");
 const usdc = require("../abis/usdc.json");
 const link = require("../abis/link.json");
@@ -79,9 +75,9 @@ const sleep = (ms) => {
 };
 
 tokenInfo = [
-  { token: DAI_USD_ADDRESS, abi: dai.abi },
-  { token: USDC_USD_ADDRESS, abi: usdc.abi },
-  { token: LINK_USD_ADDRESS, abi: link.abi },
+  { token: DAIAddress, abi: dai.abi },
+  { token: USDCAddress, abi: usdc.abi },
+  { token: LINKAddress, abi: link.abi },
 ];
 
 /*************** transfer tokens ****************/
@@ -89,7 +85,7 @@ tokenInfo = [
 /*************** main ****************/
 async function main() {
   const Faucet = await ethers.getContractFactory("Faucet");
-  const faucet = await Faucet.deploy();
+  const faucet = await Faucet.deploy(DAIAddress, USDCAddress, LINKAddress);
   await faucet.deployed();
   console.log("Faucet address :" + faucet.address);
 

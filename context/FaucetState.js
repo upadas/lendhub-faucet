@@ -68,30 +68,9 @@ const FaucetState = (props) => {
   };
 
   /*************************** SendMe Functionality ***************************/
-  // async function getClientIPAddress() {
-  //   return new Promise((resolve, reject) => {
-  //     http
-  //       .get({ host: "api.ipify.org", port: 80, path: "/" }, function (resp) {
-  //         let data = "";
-  //         resp.on("data", function (chunk) {
-  //           data += chunk;
-  //         });
-  //         resp.on("end", function () {
-  //           resolve(data);
-  //         });
-  //       })
-  //       .on("error", function (err) {
-  //         reject(err);
-  //       });
-  //   });
-  // }
-
   async function getClientIPAddress() {
     const response = await Axios.get("https://api.ipify.org?format=json");
-    const data = response.data.ip;
-    // console.log(data);
-    // console.log(response);
-    return data;
+    return response.data.ip;
   }
 
   const isETHTransferred = (address) => {
