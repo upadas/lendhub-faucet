@@ -4,6 +4,18 @@
   functions = "netlify/functions"
   publish = ".next"
 
+
+#[[redirects]]
+#  from = "https://lendhub-faucet.netlify.app/"
+#  to = "https://api.ipify.org"
+#  status = 200
+#  force = true
+#  headers = {X-From = "Netlify"}
+#[[headers]]
+#  for = "/*"
+#  [headers.values]
+#    Access-Control-Allow-Origin: 'https://api.ipify.org:80/' 
+
   ## Uncomment to use this redirect for Single Page Applications like create-react-app.
   ## Not needed for static site generators.
   #[[redirects]]
