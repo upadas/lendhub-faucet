@@ -5,8 +5,8 @@ import Image from "next/image";
 
 const DisconnectedTab = () => {
   return (
-    <div className="flex justify-center items-center ">
-      <div className="bg-gradient-to-r from-pink-200 via-purple-300 to-pink-200 flex flex-col w-full bg-slate-100 rounded-3xl py-5 md:py-10 px-2 md:max-w-[900px] -mt-14  justify-center items-center text-center ">
+    <div className="flex justify-center items-center">
+      <div className="bg-gradient-to-r from-pink-100 via-purple-200 to-pink-100 flex flex-col w-full bg-slate-100 rounded-3xl py-5 md:py-10 px-2 md:max-w-[900px] md:-mt-14 -mt-10 mx-2 justify-center items-center text-center">
         <Image
           src={metamask}
           alt="metamask"
@@ -15,7 +15,7 @@ const DisconnectedTab = () => {
         <h1 className=" text-xl font-semibold text-[#303549] mb-2">
           Please connect your wallet with Sepolia Network
         </h1>
-        <p className="text-sm text-[#62677B] mb-5">
+        <p className="text-sm font-medium text-[#303549] mb-5">
           and request test ETH or Tokens for{" "}
           <a
             href="https://lendhub.netlify.app/"

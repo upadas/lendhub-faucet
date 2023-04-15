@@ -7,13 +7,13 @@ const ConnectWalletButton = () => {
     <div>
       {!metamaskDetails.currentAccount ? (
         <button
-          className="border-spacing-2 backdrop-blur-xl bg-slate-500 hover:bg-purple-300   px-4 py-[6px] rounded-[4px] text-black text-sm font-semibold outline-none"
+          className="border-spacing-2 backdrop-blur-xl bg-slate-200 hover:bg-slate-100   px-4 py-[6px] rounded-[4px] text-black text-sm font-semibold outline-none"
           onClick={() => connectWallet()}
         >
           Connect wallet
         </button>
       ) : (
-        <button className="border-spacing-2 bg-slate-200 hover:bg-purple-300 px-4 py-[6px] rounded-[4px] text-black text-sm font-semibold outline-none flex">
+        <button className="border-spacing-2 bg-slate-200 hover:bg-slate-100 px-4 py-[6px] rounded-[4px] text-black text-sm font-semibold outline-none flex">
           <p className="uppercase">Welcome - </p>
           {` ${metamaskDetails.currentAccount
             .toString()
