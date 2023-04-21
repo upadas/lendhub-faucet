@@ -11,7 +11,7 @@ const numberToEthers = (number) => {
 };
 
 const amount = 100000;
-const faucetInitialTokenAmount = 10000;
+const faucetInitialTokenAmount = 100;
 
 const infuraProvider = new ethers.providers.InfuraProvider(
   "sepolia",
@@ -107,3 +107,12 @@ main().catch((error) => {
 // npx hardhat verify --network sepolia 0x002700E4A113B14EE1E91d0EFC5561F91c28359f
 
 // npx hardhat verify --network sepolia 0xFFd06BC984c7a9284A96caD68EBc318688f9bdCA
+
+// npx hardhat verify --constructor-args arguments.js --network sepolia 0x109172d7fb47C0E556e2e1eBb4b9c17236cC2056
+// Nothing to compile
+// Successfully submitted source code for contract
+// contracts/Faucet.sol:Faucet at 0x109172d7fb47C0E556e2e1eBb4b9c17236cC2056
+// for verification on the block explorer. Waiting for verification result...
+
+// Successfully verified contract Faucet on Etherscan.
+// https://sepolia.etherscan.io/address/0x109172d7fb47C0E556e2e1eBb4b9c17236cC2056#code

@@ -47,7 +47,8 @@ contract Faucet is ReentrancyGuard{
         require(block.timestamp - lastETHReceivedIPAddress[_ipAddress] >= COOLDOWN_PERIOD, "Request Not Allowed From This IP Address Yet");
         // Check for Cooldown period
         require(block.timestamp - lastETHReceivedTimestamp[msg.sender] >= COOLDOWN_PERIOD, "Request Not Allowed Yet");
-        (bool success,) = payable(msg.sender).call{value: dailyETHThreshold}("");
+        require(address(this).balance > dailyETHThreshold, "Not Enough Balance to Send");
+        (bool success,) = payable(msg.sender).call{value: dailyETHThreshold, gas:2000000}("");
         require(success, "Failed to transfer ETH");
         
         lastETHReceivedTimestamp[msg.sender] = block.timestamp;
@@ -62,10 +63,6 @@ contract Faucet is ReentrancyGuard{
         require(block.timestamp - lastTokenReceivedTimestamp[msg.sender][_token] >= COOLDOWN_PERIOD, "Request Not Allowed Yet");
         
         SafeERC20.safeTransfer(IERC20(_token), msg.sender, dailyTokenThreshold);
-        // should use mint instead of transfer
-        // IERC20(_token).mint(msg.sender, dailyTokenThreshold);
-        // daiToken.transfer(account1, numberToEthers(20000));
-
         lastTokenReceivedTimestamp[msg.sender][_token] = block.timestamp;
         lastTokenReceivedIPAddress[_ipAddress][_token] = block.timestamp;
         emit Transfer (msg.sender, dailyTokenThreshold);
@@ -96,7 +93,7 @@ contract Faucet is ReentrancyGuard{
     }
 
     function withdraw(address _addr) public payable onlyOwner{
-        (bool success,) = _addr.call{value: address(this).balance}("");
+        (bool success,) = _addr.call{value: address(this).balance, gas:200000}("");
         require(success, "Failed to withdraw ETH");
     }   
 }

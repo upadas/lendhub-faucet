@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@next/font": "^13.3.0",
+    "@nomiclabs/hardhat-etherscan": "^3.1.7",
     "@openzeppelin/contracts": "^4.8.2",
     "@types/node": "18.15.11",
     "@types/react": "18.0.33",
