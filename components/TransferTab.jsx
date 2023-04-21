@@ -26,25 +26,18 @@ const TransferTab = () => {
     }
   };
 
-  // const
   const handleSendMe = async () => {
     console.log(userAddress);
     console.log(tokenAddress);
-
     setIsTransferringToken(true);
-    try {
-      const transaction = await transferAssets(userAddress, tokenAddress);
-      if (transaction.status == 200) {
-        setIsTransferringToken(false);
-        toast.success("Transfer Successful!");
-        await connectWallet();
-      } else {
-        setIsTransferringToken(false);
-        toast.error("Transfer Failed!");
-      }
-    } catch (error) {
-      reportError;
-      console.log("Error:" + error);
+    const transaction = await transferAssets(userAddress, tokenAddress);
+    if (transaction.status == 200) {
+      setIsTransferringToken(false);
+      toast.success("Transfer Successful!");
+      await connectWallet();
+    } else {
+      setIsTransferringToken(false);
+      toast.error("Transfer Failed!");
     }
   };
 

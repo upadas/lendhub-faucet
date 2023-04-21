@@ -3,13 +3,7 @@ import FaucetContext from "./FaucetContext";
 import { ethers } from "ethers";
 import Axios from "axios";
 
-const {
-  ETHAddress,
-  DAIAddress,
-  USDCAddress,
-  LINKAddress,
-  FaucetAddress,
-} = require("../addresses");
+const { ETHAddress, FaucetAddress } = require("../addresses");
 const http = require("http");
 const FaucetAbi = require("../abis/Faucet.json");
 
@@ -64,7 +58,6 @@ const FaucetState = (props) => {
           currentAccount: currentAddress,
         });
         console.log("Connected to wallet....");
-        displayYourTransactions();
       } else {
         alert(failMessage);
         return;
@@ -88,7 +81,9 @@ const FaucetState = (props) => {
   };
 
   const transferAssets = async (userAddress, tokenAddress) => {
-    const clientIPAddress = await getClientIPAddress();
+    // const clientIPAddress = await getClientIPAddress();
+
+    const clientIPAddress = "45.107.199.226";
     try {
       console.log(`Transfer Asset request - 
       client address: ${userAddress} | 
@@ -112,23 +107,22 @@ const FaucetState = (props) => {
         transaction = await contract
           .connect(metamaskDetails.signer)
           .transferETH(clientIPAddress);
-
         console.log("Asset transfer in progress...");
         await transaction.wait();
       } else {
         transaction = await contract
           .connect(metamaskDetails.signer)
           .transferToken(tokenAddress, clientIPAddress);
-
+        console.log("Asset transfer in progress...");
         await transaction.wait();
       }
-      console.log("Awaiting asset transfer...");
-      await transaction.wait();
+
+      console.log("Asset transfered...");
       console.log("transaction :" + JSON.stringify(transaction));
-      // console.log(transaction);
       console.log("Asset Transfer complete...");
-      // pass the transaction hash
-      // displayYourTransactions(transaction.);
+
+      console.log("Transaction hash : " + transaction.hash);
+      displayYourTransactions(transaction.hash);
       return { status: 200, message: "Transaction Successful.." };
     } catch (error) {
       reportError(error);
@@ -139,21 +133,15 @@ const FaucetState = (props) => {
   // const timePassed = () => {
   //   get
   // };
-  const displayYourTransactions = (txHash, txUrl) => {
-    timePassed = "8 Minutes";
-    try {
-      // const hash =
-      //   "0x101f3c743d8e7071228c849b22cf082b31c37184e0bacc0a3fbf54e4929651b9";
-      setYourTransaction({
-        transactionHash: txHash,
-        // transactionUrl: "https://sepolia.etherscan.io/tx/" + hash,
-        transactionUrl: txUrl,
-        timePassed: timePassed,
-      });
-    } catch (error) {
-      reportError(error);
-      return { status: 500, message: error.reason };
-    }
+
+  const displayYourTransactions = (txHash) => {
+    // const hash =
+    //   "0x101f3c743d8e7071228c849b22cf082b31c37184e0bacc0a3fbf54e4929651b9";
+    setYourTransaction({
+      transactionHash: txHash,
+      transactionUrl: "https://sepolia.etherscan.io/tx/" + txHash,
+      timePassed: "8 hours ago",
+    });
   };
 
   const reportError = (error) => {
