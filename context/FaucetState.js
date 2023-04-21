@@ -107,21 +107,28 @@ const FaucetState = (props) => {
         console.log("Error: " + error);
       }
 
+      let transaction;
       if (isETHTransferred(tokenAddress)) {
-        const transaction = await contract
+        transaction = await contract
           .connect(metamaskDetails.signer)
           .transferETH(clientIPAddress);
+
+        console.log("Asset transfer in progress...");
+        await transaction.wait();
       } else {
-        const transaction = await contract
+        transaction = await contract
           .connect(metamaskDetails.signer)
           .transferToken(tokenAddress, clientIPAddress);
+
+        await transaction.wait();
       }
+      console.log("Awaiting asset transfer...");
       await transaction.wait();
-      // console.log("transaction :" + JSON.stringify(transaction));
-      console.log(transaction);
+      console.log("transaction :" + JSON.stringify(transaction));
+      // console.log(transaction);
       console.log("Asset Transfer complete...");
       // pass the transaction hash
-      displayYourTransactions();
+      // displayYourTransactions(transaction.);
       return { status: 200, message: "Transaction Successful.." };
     } catch (error) {
       reportError(error);
